@@ -1,0 +1,65 @@
+@import 'styles/breakpoints';
+
+.nav {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  grid-template-areas: 'logo links busca icones';
+  grid-template-columns: 1fr 2fr 2fr;
+  align-items: center;
+  width: 100vw;
+  height: 100px;
+  padding: 0 120px;
+  @media (max-width: $tablet) {
+    grid-template-areas:
+      'logo logo'
+      'links icones'
+      'busca busca';
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 6fr 1fr;
+    justify-items: center;
+    height: 200px;
+  }
+  @media (max-width: $mobile-sm) {
+    padding: 0 50px;
+  }
+}
+
+.logo {
+  grid-area: logo;
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  grid-area: links;
+  gap: 20px;
+  justify-content: flex-start;
+  @media (max-width: $tablet) {
+    justify-self: start;
+  }
+}
+
+.link {
+  color: #fff;
+  font-size: 22px;
+}
+
+.busca {
+  display: flex;
+  grid-area: busca;
+  align-items: center;
+  width: 100%;
+}
+
+.selected {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.icones {
+  display: flex;
+  grid-area: icones;
+  gap: 20px;
+  margin-left: 30px;
+}
