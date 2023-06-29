@@ -43,9 +43,9 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          "/@/assets/",
-          "/@/styles/",
-          "/@/components/",
+          "/assets/",
+          "/styles/",
+          "/components/",
           ["parent", "sibling", "index"]
         ],
         "alphabetize": {
