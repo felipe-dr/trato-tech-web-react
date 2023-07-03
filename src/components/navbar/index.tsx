@@ -1,7 +1,10 @@
 import classNames from 'classnames';
 import { RiShoppingCart2Line, RiShoppingCartFill } from 'react-icons/ri';
 
-import { ReactComponent as Logo } from '../../assets/logo.svg';
+import { ReactComponent as Logo } from 'assets/logo.svg';
+
+import Search from 'components/search';
+
 import styles from './navbar.module.scss';
 
 const iconeProps = {
@@ -25,8 +28,10 @@ export default function Navbar(): JSX.Element {
           </a>
         </div>
       </div>
-      <div className={styles.busca}></div>
-      <div className={styles.icones}>
+      <div className={styles.search}>
+        <Search />
+      </div>
+      <div className={styles.icons}>
         <a href="/carrinho">
           {window.location.pathname === '/carrinho' ? (
             <RiShoppingCartFill {...iconeProps} />
