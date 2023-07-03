@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import Navbar from './components/navbar';
+import Router from 'routes';
+
 import './index.scss';
 
 const root = ReactDOM.createRoot(
@@ -9,6 +10,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Navbar />
+    <Router />
   </React.StrictMode>
 );

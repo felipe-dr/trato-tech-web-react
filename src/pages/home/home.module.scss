@@ -1,0 +1,41 @@
+.header {
+  padding-bottom: 250px;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 100px;
+  transform: translateY(-250px);
+
+  h1 {
+    color: #fff;
+    font-size: 40px;
+  }
+
+  &-container {
+    top: calc(100% - 150px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    width: 90%;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+
+      h1 {
+        color: #041833;
+        font-size: 25px;
+      }
+
+      > img {
+        border-radius: 144px;
+      }
+    }
+  }
+}
