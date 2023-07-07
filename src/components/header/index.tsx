@@ -4,7 +4,7 @@ interface HeaderProps {
   title: string;
   description: string;
   image: string;
-  className: string;
+  className?: string;
 }
 
 export default function Header({
