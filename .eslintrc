@@ -45,6 +45,7 @@
           "module",
           "/assets/",
           "/styles/",
+          "/store/",
           "/components/",
           "/pages/",
           ["parent", "sibling", "index"]
