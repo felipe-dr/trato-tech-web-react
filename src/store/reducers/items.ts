@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { UUID } from 'crypto';
 import { v4 as uuid } from 'uuid';
 
 import airpod from 'assets/itens/airpod.png';
@@ -35,7 +36,7 @@ const initialState = [
     photo: assistenteVirtual,
     favorite: false,
     price: 285,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'eletronicos',
   },
   {
@@ -45,7 +46,7 @@ const initialState = [
     photo: airpod,
     favorite: false,
     price: 900,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'eletronicos',
   },
   {
@@ -55,7 +56,7 @@ const initialState = [
     photo: tablet,
     favorite: false,
     price: 637,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'eletronicos',
   },
   {
@@ -65,7 +66,7 @@ const initialState = [
     photo: assistenteVirtualTela,
     favorite: false,
     price: 1600,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'eletronicos',
   },
   {
@@ -75,7 +76,7 @@ const initialState = [
     photo: leitorLivros,
     favorite: false,
     price: 447,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'eletronicos',
   },
   {
@@ -85,7 +86,7 @@ const initialState = [
     photo: almofadaAssento,
     favorite: false,
     price: 45.9,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'automotivos',
   },
   {
@@ -95,7 +96,7 @@ const initialState = [
     photo: capaVolanteCouro,
     favorite: false,
     price: 150,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'automotivos',
   },
   {
@@ -105,7 +106,7 @@ const initialState = [
     photo: organizadorLateral,
     favorite: false,
     price: 149.9,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'automotivos',
   },
   {
@@ -115,7 +116,7 @@ const initialState = [
     photo: capaVolanteCristais,
     favorite: false,
     price: 290,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'automotivos',
   },
   {
@@ -125,7 +126,7 @@ const initialState = [
     photo: suporteVeicular,
     favorite: false,
     price: 59.9,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'automotivos',
   },
   {
@@ -135,7 +136,7 @@ const initialState = [
     photo: console1,
     favorite: false,
     price: 4300,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'jogos',
   },
   {
@@ -145,7 +146,7 @@ const initialState = [
     photo: jogo1,
     favorite: false,
     price: 299.9,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'jogos',
   },
   {
@@ -155,7 +156,7 @@ const initialState = [
     photo: console2,
     favorite: false,
     price: 4349,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'jogos',
   },
   {
@@ -165,7 +166,7 @@ const initialState = [
     photo: manete,
     favorite: false,
     price: 279,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'jogos',
   },
   {
@@ -175,7 +176,7 @@ const initialState = [
     photo: jogo2,
     favorite: false,
     price: 349.9,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'jogos',
   },
   {
@@ -185,7 +186,7 @@ const initialState = [
     photo: guardaTreco,
     favorite: false,
     price: 19.9,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'escritorio',
   },
   {
@@ -195,7 +196,7 @@ const initialState = [
     photo: caderno,
     favorite: false,
     price: 285,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'escritorio',
   },
   {
@@ -205,7 +206,7 @@ const initialState = [
     photo: cadeira,
     favorite: false,
     price: 629,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'escritorio',
   },
   {
@@ -215,7 +216,7 @@ const initialState = [
     photo: papel,
     favorite: false,
     price: 27.6,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'escritorio',
   },
   {
@@ -225,7 +226,7 @@ const initialState = [
     photo: organizadorPastas,
     favorite: false,
     price: 44.9,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'escritorio',
   },
   {
@@ -235,7 +236,7 @@ const initialState = [
     photo: tv50,
     favorite: false,
     price: 2600,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'som',
   },
   {
@@ -245,7 +246,7 @@ const initialState = [
     photo: tv60,
     favorite: false,
     price: 3359,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'som',
   },
   {
@@ -255,7 +256,7 @@ const initialState = [
     photo: caixaSom,
     favorite: false,
     price: 5817.33,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'som',
   },
   {
@@ -265,7 +266,7 @@ const initialState = [
     photo: caixaSomBluetooth,
     favorite: false,
     price: 1199,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'som',
   },
   {
@@ -275,15 +276,28 @@ const initialState = [
     photo: miniSystem,
     favorite: false,
     price: 782.91,
-    id: uuid(),
+    id: uuid() as UUID,
     category: 'som',
   },
 ];
 
-const itensSlice = createSlice({
-  name: 'itens',
+const itemsSlice = createSlice({
+  name: 'items',
   initialState,
-  reducers: {},
+  reducers: {
+    changeFavorite: (state, action: PayloadAction<UUID>) => {
+      state.map((item) => {
+        const favoriteItem = item;
+
+        if (favoriteItem.id === action.payload) {
+          favoriteItem.favorite = !item.favorite;
+        }
+
+        return favoriteItem;
+      });
+    },
+  },
 });
 
-export default itensSlice.reducer;
+export const { changeFavorite } = itemsSlice.actions;
+export default itemsSlice.reducer;
