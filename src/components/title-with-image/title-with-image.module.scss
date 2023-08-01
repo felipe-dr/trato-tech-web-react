@@ -1,0 +1,50 @@
+@import 'styles/breakpoints';
+
+.header {
+  display: grid;
+  grid-template-areas: 'title image';
+  grid-template-columns: 1fr 2fr;
+  justify-content: space-between;
+
+  @media (max-width: $tablet) {
+    grid-template-areas: 'title' 'image';
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+
+  &-title {
+    grid-area: title;
+    color: #fff;
+
+    h1 {
+      font-size: 60px;
+    }
+
+    h2 {
+      font-size: 25px;
+    }
+  }
+
+  &-button {
+    display: flex;
+
+    @media (max-width: $tablet) {
+      justify-content: center;
+    }
+  }
+
+  &-image {
+    grid-area: image;
+    align-self: center;
+    justify-self: center;
+    overflow: hidden;
+    max-width: 700px;
+
+    img {
+      width: 100%;
+      border-radius: 144px;
+    }
+  }
+}
