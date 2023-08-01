@@ -1,9 +1,11 @@
+import classNames from 'classnames';
 import { UUID } from 'crypto';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaCartPlus } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { AppDispatch } from 'store';
+import { AppDispatch, RootState } from 'store';
+import { changeCart } from 'store/reducers/cart';
 import { changeFavorite } from 'store/reducers/items';
 
 import styles from './item.module.scss';
@@ -15,6 +17,7 @@ interface ItemProps {
   photo: string;
   price: number;
   favorite: boolean;
+  cart?: boolean;
 }
 
 const iconProps = {
@@ -23,15 +26,22 @@ const iconProps = {
 };
 
 export default function Item(props: ItemProps) {
-  const { id, title, description, photo, price, favorite } = props;
+  const { id, title, description, photo, price, favorite, cart } = props;
   const dispatch = useDispatch<AppDispatch>();
+  const hasInCart = useSelector((state: RootState) =>
+    state.cart.some((cartItem) => cartItem.id === id)
+  );
 
   function solveFavorite() {
     dispatch(changeFavorite(id));
   }
 
+  function solveCart() {
+    dispatch(changeCart(id));
+  }
+
   return (
-    <div className={styles.item}>
+    <div className={classNames(styles.item, { [styles['item-cart']]: cart })}>
       <div className={styles['item-image']}>
         <img src={photo} alt={title} />
       </div>
@@ -60,7 +70,8 @@ export default function Item(props: ItemProps) {
             <FaCartPlus
               className={styles['item-action']}
               {...iconProps}
-              color={false ? '#1875e8' : iconProps.color}
+              color={hasInCart ? '#1875e8' : iconProps.color}
+              onClick={solveCart}
             />
           </div>
         </div>
