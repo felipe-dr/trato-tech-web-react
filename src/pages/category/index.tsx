@@ -10,10 +10,16 @@ import styles from './category.module.scss';
 
 export default function Category() {
   const { categoryName } = useParams();
-  const { category, items } = useSelector((state: RootState) => ({
-    category: state.categories.find((categ) => categ.id === categoryName),
-    items: state.items.filter((item) => item.category === categoryName),
-  }));
+  const { category, items } = useSelector((state: RootState) => {
+    const regexp = new RegExp(state.search, 'i');
+
+    return {
+      category: state.categories.find((categ) => categ.id === categoryName),
+      items: state.items.filter(
+        (item) => item.category === categoryName && item.title.match(regexp)
+      ),
+    };
+  });
 
   return (
     <div>

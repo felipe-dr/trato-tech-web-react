@@ -1,11 +1,16 @@
 import classNames from 'classnames';
 import { UUID } from 'crypto';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import {
+  AiFillHeart,
+  AiFillMinusCircle,
+  AiFillPlusCircle,
+  AiOutlineHeart,
+} from 'react-icons/ai';
 import { FaCartPlus } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AppDispatch, RootState } from 'store';
-import { changeCart } from 'store/reducers/cart';
+import { changeCart, changeQuantity } from 'store/reducers/cart';
 import { changeFavorite } from 'store/reducers/items';
 
 import styles from './item.module.scss';
@@ -18,6 +23,7 @@ interface ItemProps {
   price: number;
   favorite: boolean;
   cart?: boolean;
+  quantity?: number;
 }
 
 const iconProps = {
@@ -25,8 +31,22 @@ const iconProps = {
   color: '#041833',
 };
 
+const quantityProps = {
+  size: 32,
+  color: '#1875E8',
+};
+
 export default function Item(props: ItemProps) {
-  const { id, title, description, photo, price, favorite, cart } = props;
+  const {
+    id,
+    title,
+    description,
+    photo,
+    price,
+    favorite,
+    cart,
+    quantity = 0,
+  } = props;
   const dispatch = useDispatch<AppDispatch>();
   const hasInCart = useSelector((state: RootState) =>
     state.cart.some((cartItem) => cartItem.id === id)
@@ -67,12 +87,31 @@ export default function Item(props: ItemProps) {
                 onClick={solveFavorite}
               />
             )}
-            <FaCartPlus
-              className={styles['item-action']}
-              {...iconProps}
-              color={hasInCart ? '#1875e8' : iconProps.color}
-              onClick={solveCart}
-            />
+            {cart ? (
+              <div className={styles['item-cart__quantity']}>
+                Quantidade:
+                <AiFillMinusCircle
+                  onClick={() => {
+                    if (quantity >= 1) {
+                      dispatch(changeQuantity({ id, quantity: -1 }));
+                    }
+                  }}
+                  {...quantityProps}
+                />
+                <span>{String(quantity || 0).padStart(2, '0')}</span>
+                <AiFillPlusCircle
+                  onClick={() => dispatch(changeQuantity({ id, quantity: +1 }))}
+                  {...quantityProps}
+                />
+              </div>
+            ) : (
+              <FaCartPlus
+                className={styles['item-action']}
+                {...iconProps}
+                color={hasInCart ? '#1875e8' : iconProps.color}
+                onClick={solveCart}
+              />
+            )}
           </div>
         </div>
       </div>

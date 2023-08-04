@@ -1,7 +1,8 @@
 import { UUID } from 'crypto';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from 'store';
+import { resetCart } from 'store/reducers/cart';
 
 import Header from 'components/header';
 import Item from 'components/item';
@@ -20,8 +21,11 @@ interface CartItem {
 }
 
 export default function Cart() {
+  const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => {
     const typedArray: CartItem[] = [];
+    const regexp = new RegExp(state.search, 'i');
+    let total = 0;
 
     const cartReduce = state.cart.reduce((items, cartItem) => {
       const item = state.items.find(
@@ -29,16 +33,23 @@ export default function Cart() {
       );
 
       if (item) {
-        items.push({
-          ...item,
-          quantity: cartItem.quantity,
-        });
+        if (item.title.match(regexp)) {
+          items.push({
+            ...item,
+            quantity: cartItem.quantity,
+          });
+        }
+
+        total += item.price * cartItem.quantity;
       }
 
       return items;
     }, typedArray);
 
-    return cartReduce;
+    return {
+      cartReduce,
+      total,
+    };
   });
 
   return (
@@ -48,15 +59,18 @@ export default function Cart() {
         description="Confira produtos que você adicionou ao carrinho."
       />
       <div className={styles.cart}>
-        {cart.map((item) => (
+        {cart.cartReduce.map((item) => (
           <Item key={item.id} {...item} cart />
         ))}
         <div className={styles.total}>
           <strong>Resumo da compra</strong>
           <span>
-            Subtotal: <strong> R$ {(0.0).toFixed(2)} </strong>
+            Subtotal: <strong> R$ {cart.total.toFixed(2)} </strong>
           </span>
         </div>
+        <button className={styles.finish} onClick={() => dispatch(resetCart())}>
+          Finalizar compra
+        </button>
       </div>
     </div>
   );
