@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { resetCart } from 'store/reducers/cart';
 
+import Button from 'components/button';
 import Header from 'components/header';
 import Item from 'components/item';
 
@@ -68,9 +69,9 @@ export default function Cart() {
             Subtotal: <strong> R$ {cart.total.toFixed(2)} </strong>
           </span>
         </div>
-        <button className={styles.finish} onClick={() => dispatch(resetCart())}>
+        <Button type="submit" onClick={() => dispatch(resetCart())}>
           Finalizar compra
-        </button>
+        </Button>
       </div>
     </div>
   );
