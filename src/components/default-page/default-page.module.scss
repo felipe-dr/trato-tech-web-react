@@ -4,6 +4,8 @@
   min-height: 100vh;
 
   &-outlet {
+    display: flex;
     flex: 1;
+    flex-direction: column;
   }
 }
