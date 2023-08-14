@@ -14,7 +14,7 @@ interface CartItem {
   title: string;
   description: string;
   photo: string;
-  favorite: boolean;
+  favorite?: boolean;
   price: number;
   id: UUID;
   category: string;

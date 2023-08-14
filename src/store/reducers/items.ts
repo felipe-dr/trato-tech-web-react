@@ -28,7 +28,9 @@ import tablet from 'assets/itens/tablet.png';
 import tv50 from 'assets/itens/tv-50.png';
 import tv60 from 'assets/itens/tv-60.png';
 
-const initialState = [
+import { ItemModel } from 'interfaces/item';
+
+const initialState: ItemModel[] = [
   {
     title: 'Assistente virtual',
     description:
@@ -296,8 +298,11 @@ const itemsSlice = createSlice({
         return favoriteItem;
       });
     },
+    registerItem: (state, action: PayloadAction<ItemModel>) => {
+      state.push(action.payload);
+    },
   },
 });
 
-export const { changeFavorite } = itemsSlice.actions;
+export const { changeFavorite, registerItem } = itemsSlice.actions;
 export default itemsSlice.reducer;

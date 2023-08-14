@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { UUID } from 'crypto';
+import { ItemModel } from 'interfaces/item';
 import {
   AiFillHeart,
   AiFillMinusCircle,
@@ -15,16 +15,7 @@ import { changeFavorite } from 'store/reducers/items';
 
 import styles from './item.module.scss';
 
-interface ItemProps {
-  id: UUID;
-  title: string;
-  description: string;
-  photo: string;
-  price: number;
-  favorite: boolean;
-  cart?: boolean;
-  quantity?: number;
-}
+type ItemProps = ItemModel;
 
 const iconProps = {
   size: 24,
