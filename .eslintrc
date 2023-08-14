@@ -48,6 +48,7 @@
           "/store/",
           "/components/",
           "/pages/",
+          "/interfaces/",
           ["parent", "sibling", "index"]
         ],
         "alphabetize": {

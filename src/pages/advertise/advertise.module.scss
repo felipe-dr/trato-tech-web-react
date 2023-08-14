@@ -26,5 +26,17 @@
     &:focus {
       outline: 2px solid #1a95f0;
     }
+
+    &:invalid {
+      outline: 2px solid #f00;
+    }
+  }
+
+  .input-error {
+    outline: 2px solid #f00;
+  }
+
+  .message-error {
+    color: #f00;
   }
 }
