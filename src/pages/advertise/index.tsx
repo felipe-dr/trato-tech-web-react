@@ -1,5 +1,6 @@
 import { FieldValues, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 import { RootState } from 'store';
@@ -13,19 +14,20 @@ import { ItemModel } from 'interfaces/item';
 import styles from './advertise.module.scss';
 
 export default function Advertise(): JSX.Element {
+  const { categoryName = '' } = useParams();
   const { register, formState, handleSubmit } = useForm({
     defaultValues: {
       title: '',
       description: '',
       photo: '',
-      category: '',
+      category: categoryName,
       price: NaN,
     },
   });
   const { errors } = formState;
 
-  const categories = useSelector((state: RootState) => state.categories);
   const dispatch = useDispatch();
+  const categories = useSelector((state: RootState) => state.categories);
 
   function registerProduct(data: FieldValues) {
     const values = { ...data, id: uuid() };
@@ -80,6 +82,7 @@ export default function Advertise(): JSX.Element {
           {...register('category', {
             required: 'O campo categoria é obrigatório',
           })}
+          disabled={!!categoryName}
         >
           <option value="" disabled>
             Selecione a categoria
@@ -99,7 +102,10 @@ export default function Advertise(): JSX.Element {
           className={errors.price ? styles['input-error'] : ''}
           type="number"
           placeholder="Preço do produto"
-          {...register('price', { required: 'O campo preço é obrigatório' })}
+          {...register('price', {
+            required: 'O campo preço é obrigatório',
+            valueAsNumber: true,
+          })}
         />
         {errors.price && (
           <span className={styles['message-error']}>
