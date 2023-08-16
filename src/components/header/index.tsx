@@ -8,6 +8,7 @@ interface HeaderProps {
   description: string;
   image?: string;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export default function Header({
@@ -15,11 +16,14 @@ export default function Header({
   description,
   image,
   className = '',
+  children,
 }: HeaderProps) {
   return (
     <header className={`${styles.header}`}>
       {title && !image && (
-        <TitleWithoutImage title={title} description={description} />
+        <TitleWithoutImage title={title} description={description}>
+          {children}
+        </TitleWithoutImage>
       )}
       {title && image && (
         <TitleWithImage
@@ -27,7 +31,9 @@ export default function Header({
           description={description}
           image={image}
           className={className}
-        />
+        >
+          {children}
+        </TitleWithImage>
       )}
     </header>
   );

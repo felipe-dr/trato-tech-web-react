@@ -15,6 +15,7 @@ export default function Router() {
           <Route index element={<Home />} />
           <Route path="/categoria/:categoryName" element={<Category />} />
           <Route path="/carrinho" element={<Cart />} />
+          <Route path="/anuncie/:categoryName" element={<Advertise />} />
           <Route path="/anuncie" element={<Advertise />} />
         </Route>
       </Routes>
