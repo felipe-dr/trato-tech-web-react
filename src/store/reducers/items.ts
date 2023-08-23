@@ -301,8 +301,15 @@ const itemsSlice = createSlice({
     registerItem: (state, action: PayloadAction<ItemModel>) => {
       state.push(action.payload);
     },
+    changeItem: (
+      state,
+      action: PayloadAction<{ id: UUID; item: { title: string } }>
+    ) => {
+      const index = state.findIndex((item) => item.id === action.payload.id);
+      Object.assign(state[index], action.payload.item);
+    },
   },
 });
 
-export const { changeFavorite, registerItem } = itemsSlice.actions;
+export const { changeFavorite, registerItem, changeItem } = itemsSlice.actions;
 export default itemsSlice.reducer;
