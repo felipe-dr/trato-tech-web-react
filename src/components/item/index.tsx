@@ -1,9 +1,11 @@
 import classNames from 'classnames';
-import { ItemModel } from 'interfaces/item';
+import { useState } from 'react';
 import {
+  AiFillEdit,
   AiFillHeart,
   AiFillMinusCircle,
   AiFillPlusCircle,
+  AiOutlineCheck,
   AiOutlineHeart,
 } from 'react-icons/ai';
 import { FaCartPlus } from 'react-icons/fa';
@@ -11,7 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { AppDispatch, RootState } from 'store';
 import { changeCart, changeQuantity } from 'store/reducers/cart';
-import { changeFavorite } from 'store/reducers/items';
+import { changeFavorite, changeItem } from 'store/reducers/items';
+
+// eslint-disable-next-line import/no-named-as-default
+import Input from 'components/input';
+
+import { ItemModel } from 'interfaces/item';
 
 import styles from './item.module.scss';
 
@@ -38,6 +45,8 @@ export default function Item(props: ItemProps) {
     cart,
     quantity = 0,
   } = props;
+  const [editionMode, setEditMode] = useState<boolean>(false);
+  const [newTitle, setNewTitle] = useState<string>(title);
   const dispatch = useDispatch<AppDispatch>();
   const hasInCart = useSelector((state: RootState) =>
     state.cart.some((cartItem) => cartItem.id === id)
@@ -51,6 +60,27 @@ export default function Item(props: ItemProps) {
     dispatch(changeCart(id));
   }
 
+  const editModeComponent = (
+    <>
+      {editionMode ? (
+        <AiOutlineCheck
+          className={styles['item-action']}
+          {...iconProps}
+          onClick={() => {
+            setEditMode(false);
+            dispatch(changeItem({ id, item: { title: newTitle } }));
+          }}
+        />
+      ) : (
+        <AiFillEdit
+          className={styles['item-action']}
+          {...iconProps}
+          onClick={() => setEditMode(true)}
+        />
+      )}
+    </>
+  );
+
   return (
     <div className={classNames(styles.item, { [styles['item-cart']]: cart })}>
       <div className={styles['item-image']}>
@@ -58,7 +88,14 @@ export default function Item(props: ItemProps) {
       </div>
       <div className={styles['item-description']}>
         <div className={styles['item-title']}>
-          <h2>{title}</h2>
+          {editionMode ? (
+            <Input
+              value={newTitle}
+              onChange={(event) => setNewTitle(event.target.value)}
+            />
+          ) : (
+            <h2>{title}</h2>
+          )}
           <p>{description}</p>
         </div>
         <div className={styles['item-info']}>
@@ -96,12 +133,15 @@ export default function Item(props: ItemProps) {
                 />
               </div>
             ) : (
-              <FaCartPlus
-                className={styles['item-action']}
-                {...iconProps}
-                color={hasInCart ? '#1875e8' : iconProps.color}
-                onClick={solveCart}
-              />
+              <>
+                <FaCartPlus
+                  className={styles['item-action']}
+                  {...iconProps}
+                  color={hasInCart ? '#1875e8' : iconProps.color}
+                  onClick={solveCart}
+                />
+                {editModeComponent}
+              </>
             )}
           </div>
         </div>

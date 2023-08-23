@@ -8,6 +8,8 @@ import { registerItem } from 'store/reducers/items';
 
 import Button from 'components/button';
 import Header from 'components/header';
+// eslint-disable-next-line import/no-named-as-default
+import Input from 'components/input';
 
 import { ItemModel } from 'interfaces/item';
 
@@ -42,7 +44,7 @@ export default function Advertise(): JSX.Element {
         description="Anuncie seu produto no melhor site do Brasil!"
       />
       <form className={styles.form} onSubmit={handleSubmit(registerProduct)}>
-        <input
+        <Input
           className={errors.title ? styles['input-error'] : ''}
           placeholder="Nome do produto"
           alt="Nome do produto"
@@ -53,7 +55,7 @@ export default function Advertise(): JSX.Element {
             {errors.title.message}
           </span>
         )}
-        <input
+        <Input
           className={errors.description ? styles['input-error'] : ''}
           placeholder="Descrição do produto"
           alt="Descrição do produto"
@@ -66,7 +68,7 @@ export default function Advertise(): JSX.Element {
             {errors.description?.message}
           </span>
         )}
-        <input
+        <Input
           className={errors.photo ? styles['input-error'] : ''}
           placeholder="URL da imagem do produto"
           alt="URL da imagem do produto"
@@ -98,7 +100,7 @@ export default function Advertise(): JSX.Element {
             {errors.category?.message}
           </span>
         )}
-        <input
+        <Input
           className={errors.price ? styles['input-error'] : ''}
           type="number"
           placeholder="Preço do produto"
