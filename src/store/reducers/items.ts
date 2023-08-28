@@ -308,8 +308,13 @@ const itemsSlice = createSlice({
       const index = state.findIndex((item) => item.id === action.payload.id);
       Object.assign(state[index], action.payload.item);
     },
+    deleteItem: (state, action: PayloadAction<UUID>) => {
+      const index = state.findIndex((item) => item.id === action.payload);
+      state.splice(index, 1);
+    },
   },
 });
 
-export const { changeFavorite, registerItem, changeItem } = itemsSlice.actions;
+export const { changeFavorite, registerItem, changeItem, deleteItem } =
+  itemsSlice.actions;
 export default itemsSlice.reducer;

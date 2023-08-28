@@ -1,6 +1,7 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import {
+  AiFillCloseCircle,
   AiFillEdit,
   AiFillHeart,
   AiFillMinusCircle,
@@ -13,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { AppDispatch, RootState } from 'store';
 import { changeCart, changeQuantity } from 'store/reducers/cart';
-import { changeFavorite, changeItem } from 'store/reducers/items';
+import { changeFavorite, changeItem, deleteItem } from 'store/reducers/items';
 
 // eslint-disable-next-line import/no-named-as-default
 import Input from 'components/input';
@@ -34,7 +35,7 @@ const quantityProps = {
   color: '#1875E8',
 };
 
-export default function Item(props: ItemProps) {
+function Item(props: ItemProps) {
   const {
     id,
     title,
@@ -83,6 +84,11 @@ export default function Item(props: ItemProps) {
 
   return (
     <div className={classNames(styles.item, { [styles['item-cart']]: cart })}>
+      <AiFillCloseCircle
+        className={`${styles['item-action']} ${styles['item-delete']}`}
+        {...iconProps}
+        onClick={() => dispatch(deleteItem(id))}
+      />
       <div className={styles['item-image']}>
         <img src={photo} alt={title} />
       </div>
@@ -149,3 +155,5 @@ export default function Item(props: ItemProps) {
     </div>
   );
 }
+
+export default memo(Item);
