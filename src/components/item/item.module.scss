@@ -1,11 +1,16 @@
 .item {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   width: 335px;
   border-radius: 10px;
   background-color: #fff;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.08));
+
+  &-delete {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+  }
 
   &-description {
     display: flex;
@@ -29,6 +34,7 @@
   }
 
   &-image {
+    overflow: hidden;
     width: 335px;
     height: 160px;
     margin: 0 auto;
