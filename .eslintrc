@@ -37,6 +37,7 @@
     "prettier/prettier": 2,
     "import/prefer-default-export": "off",
     "import/no-unresolved": "error",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import-helpers/order-imports": [
       "warn",
       {
