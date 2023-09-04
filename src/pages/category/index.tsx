@@ -16,7 +16,9 @@ export default function Category() {
     const regexp = new RegExp(state.search, 'i');
 
     return {
-      category: state.categories.find((categ) => categ.id === categoryName),
+      category: state.categories.find(
+        (categ) => categ.id === categoryName || {}
+      ),
       items: state.items.filter(
         (item) => item.category === categoryName && item.title.match(regexp)
       ),

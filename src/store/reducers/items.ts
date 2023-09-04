@@ -1,9 +1,12 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { UUID } from 'crypto';
+import itemsService from 'services/items';
 
 import { ItemModel } from 'interfaces/item';
 
 const initialState: ItemModel[] = [];
+
+export const getItems = createAsyncThunk('items/get', itemsService.get);
 
 const itemsSlice = createSlice({
   name: 'items',
@@ -37,6 +40,11 @@ const itemsSlice = createSlice({
     addItems: (state, { payload }) => {
       state.push(...payload);
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getItems.fulfilled, (state, { payload }) => {
+      state.push(...payload);
+    });
   },
 });
 
