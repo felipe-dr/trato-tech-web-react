@@ -1,13 +1,12 @@
-import instance from 'common/config/api';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import clock from 'assets/initial.png';
 
-import { RootState } from 'store';
-import { addCategories } from 'store/reducers/categories';
-import { addItems } from 'store/reducers/items';
+import { AppDispatch, RootState } from 'store';
+import { getCategories } from 'store/reducers/categories';
+import { getItems } from 'store/reducers/items';
 
 import Button from 'components/button';
 import Header from 'components/header';
@@ -16,25 +15,13 @@ import styles from './home.module.scss';
 
 export default function Home() {
   const categories = useSelector((state: RootState) => state.categories);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const getCategories = useCallback(async () => {
-    const response = await instance.get('/categories');
-
-    dispatch(addCategories(response.data));
-  }, [dispatch]);
-
-  const getItems = useCallback(async () => {
-    const response = await instance.get('/items');
-
-    dispatch(addItems(response.data));
-  }, [dispatch]);
-
   useEffect(() => {
-    getCategories();
-    getItems();
-  }, [getCategories, getItems]);
+    dispatch(getCategories());
+    dispatch(getItems());
+  }, [dispatch]);
 
   return (
     <div>
