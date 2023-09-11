@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { UUID } from 'crypto';
+
 import itemsService from 'services/items';
 
 import { ItemModel } from 'interfaces/item';
@@ -37,22 +38,12 @@ const itemsSlice = createSlice({
       const index = state.findIndex((item) => item.id === action.payload);
       state.splice(index, 1);
     },
-    addItems: (state, { payload }) => {
-      state.push(...payload);
-    },
   },
   extraReducers: (builder) => {
-    builder.addCase(getItems.fulfilled, (state, { payload }) => {
-      state.push(...payload);
-    });
+    builder.addCase(getItems.fulfilled, (state, { payload }) => payload);
   },
 });
 
-export const {
-  changeFavorite,
-  registerItem,
-  changeItem,
-  deleteItem,
-  addItems,
-} = itemsSlice.actions;
+export const { changeFavorite, registerItem, changeItem, deleteItem } =
+  itemsSlice.actions;
 export default itemsSlice.reducer;
