@@ -46,6 +46,8 @@
           "module",
           "/assets/",
           "/styles/",
+          "/common/",
+          "/services/",
           "/store/",
           "/components/",
           "/pages/",
