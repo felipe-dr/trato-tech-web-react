@@ -1,5 +1,5 @@
 import { createStandaloneToast } from '@chakra-ui/toast';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import categoriesService from 'services/categories';
 
@@ -11,6 +11,8 @@ const { toast } = createStandaloneToast();
 
 const initialState: CategoryModel[] = [];
 
+export const loadCategories = createAction('categories/loadCategories');
+
 export const getCategories = createAsyncThunk(
   'categories/get',
   categoriesService.get
@@ -19,38 +21,11 @@ export const getCategories = createAsyncThunk(
 const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
-  reducers: {},
+  reducers: {
+    addAllCategories: (state, { payload }) => payload,
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getCategories.fulfilled, (_state, { payload }) => {
-        toast({
-          title: 'Sucesso!',
-          description: 'Categorias carregadas com sucesso',
-          status: 'success',
-          duration: 2000,
-          isClosable: true,
-        });
-
-        return payload;
-      })
-      .addCase(getCategories.pending, () => {
-        toast({
-          title: 'Carregando!',
-          description: 'Carregando categorias',
-          status: 'loading',
-          duration: 2000,
-          isClosable: true,
-        });
-      })
-      .addCase(getCategories.rejected, () => {
-        toast({
-          title: 'Erro!',
-          description: 'Erro ao carregar as categorias',
-          status: 'error',
-          duration: 2000,
-          isClosable: true,
-        });
-      })
       /**
        * Exemplo de que é possível acessar outros reducers fora do escopo
        */
@@ -66,4 +41,5 @@ const categoriesSlice = createSlice({
   },
 });
 
+export const { addAllCategories } = categoriesSlice.actions;
 export default categoriesSlice.reducer;
