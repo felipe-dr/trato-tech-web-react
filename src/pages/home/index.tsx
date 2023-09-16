@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import clock from 'assets/initial.png';
 
 import { AppDispatch, RootState } from 'store';
-import { getCategories } from 'store/reducers/categories';
+import { loadCategories } from 'store/reducers/categories';
 import { getItems } from 'store/reducers/items';
 
 import Button from 'components/button';
@@ -19,7 +19,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getCategories());
+    dispatch(loadCategories());
     dispatch(getItems());
   }, [dispatch]);
 
