@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { TypedStartListening, configureStore } from '@reduxjs/toolkit';
 
 import { listener } from './middlewares/categories';
 import cartSlice from './reducers/cart';
@@ -19,4 +19,5 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type AppStartListening = TypedStartListening<RootState, AppDispatch>;
 export default store;

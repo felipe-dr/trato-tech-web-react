@@ -1,51 +1,66 @@
-import { createStandaloneToast } from '@chakra-ui/toast';
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 
 import categoriesService from 'services/categories';
 
-import { addAllCategories, loadCategories } from 'store/reducers/categories';
+import {
+  addAllCategories,
+  addCategory,
+  loadCategories,
+  loadCategory,
+} from 'store/reducers/categories';
+
+import { CategoryModel } from 'interfaces/categories';
+
+import createTask from './utils/create-task';
 
 export const listener = createListenerMiddleware();
-const { toast } = createStandaloneToast();
 
 listener.startListening({
   actionCreator: loadCategories,
-  effect: async (_action, { dispatch, fork, unsubscribe }) => {
-    toast({
-      title: 'Carregando!',
-      description: 'Carregando categorias',
-      status: 'loading',
-      duration: 2000,
-      isClosable: true,
+  effect: async (_action, { fork, dispatch, unsubscribe }) => {
+    const response = await createTask<CategoryModel>({
+      fork,
+      dispatch,
+      get: categoriesService.get,
+      action: addAllCategories,
+      loadingText: 'Carregando categorias',
+      successText: 'Categorias carregadas com sucesso',
+      errorText: 'Erro ao carregar as categorias',
     });
-
-    const task = fork(async (api) => {
-      await api.delay(1000);
-
-      return categoriesService.get();
-    });
-    const response = await task.result;
 
     if (response.status === 'ok') {
-      toast({
-        title: 'Sucesso!',
-        description: 'Categorias carregadas com sucesso',
-        status: 'success',
-        duration: 2000,
-        isClosable: true,
-      });
-
-      dispatch(addAllCategories(response.value));
       unsubscribe();
     }
+  },
+});
 
-    if (response.status === 'rejected') {
-      toast({
-        title: 'Erro!',
-        description: 'Erro ao carregar as categorias',
-        status: 'error',
-        duration: 2000,
-        isClosable: true,
+listener.startListening({
+  actionCreator: loadCategory,
+  effect: async (action, { fork, dispatch, getState, unsubscribe }) => {
+    const { categories } = getState() as { categories: CategoryModel[] };
+    const categoryName = action.payload;
+    const loadedCategory = categories.some(
+      (category) => category.id === categoryName
+    );
+
+    if (loadedCategory) {
+      return;
+    }
+
+    if (categories.length === 5) {
+      // eslint-disable-next-line consistent-return
+      return unsubscribe();
+    }
+
+    if (categoryName) {
+      await createTask<CategoryModel>({
+        fork,
+        dispatch,
+        action: addCategory,
+        get: () => categoriesService.getCategory(categoryName as string),
+        loadingText: `Carregando categoria ${categoryName}`,
+        successText: `Categoria ${categoryName} carregada com sucesso`,
+        errorText: `Erro ao carregar a categoria ${categoryName}`,
       });
     }
   },

@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 import { RootState } from 'store';
+import { loadCategories, loadCategory } from 'store/reducers/categories';
 import { registerItem } from 'store/reducers/items';
 
 import Button from 'components/button';
@@ -36,6 +38,10 @@ export default function Advertise(): JSX.Element {
 
     dispatch(registerItem(values as ItemModel));
   }
+
+  useEffect(() => {
+    dispatch(categoryName ? loadCategory(categoryName) : loadCategories());
+  }, [dispatch, categoryName]);
 
   return (
     <div className={styles.container}>
