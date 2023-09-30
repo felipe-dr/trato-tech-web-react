@@ -38,12 +38,20 @@ const itemsSlice = createSlice({
       const index = state.findIndex((item) => item.id === action.payload);
       state.splice(index, 1);
     },
+    addItems: (state, action: PayloadAction<ItemModel[]>) => {
+      state.push(...action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getItems.fulfilled, (state, { payload }) => payload);
   },
 });
 
-export const { changeFavorite, registerItem, changeItem, deleteItem } =
-  itemsSlice.actions;
+export const {
+  changeFavorite,
+  registerItem,
+  changeItem,
+  deleteItem,
+  addItems,
+} = itemsSlice.actions;
 export default itemsSlice.reducer;

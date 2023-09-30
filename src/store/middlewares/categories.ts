@@ -13,9 +13,9 @@ import { CategoryModel } from 'interfaces/categories';
 
 import createTask from './utils/create-task';
 
-export const listener = createListenerMiddleware();
+export const categoriesListener = createListenerMiddleware();
 
-listener.startListening({
+categoriesListener.startListening({
   actionCreator: loadCategories,
   effect: async (_action, { fork, dispatch, unsubscribe }) => {
     const response = await createTask<CategoryModel>({
@@ -34,7 +34,7 @@ listener.startListening({
   },
 });
 
-listener.startListening({
+categoriesListener.startListening({
   actionCreator: loadCategory,
   effect: async (action, { fork, dispatch, getState, unsubscribe }) => {
     const { categories } = getState() as { categories: CategoryModel[] };
@@ -52,16 +52,14 @@ listener.startListening({
       return unsubscribe();
     }
 
-    if (categoryName) {
-      await createTask<CategoryModel>({
-        fork,
-        dispatch,
-        action: addCategory,
-        get: () => categoriesService.getCategory(categoryName as string),
-        loadingText: `Carregando categoria ${categoryName}`,
-        successText: `Categoria ${categoryName} carregada com sucesso`,
-        errorText: `Erro ao carregar a categoria ${categoryName}`,
-      });
-    }
+    await createTask<CategoryModel>({
+      fork,
+      dispatch,
+      action: addCategory,
+      get: () => categoriesService.getCategory(categoryName as string),
+      loadingText: `Carregando categoria ${categoryName}`,
+      successText: `Categoria ${categoryName} carregada com sucesso`,
+      errorText: `Erro ao carregar a categoria ${categoryName}`,
+    });
   },
 });
