@@ -6,7 +6,6 @@ import clock from 'assets/initial.png';
 
 import { AppDispatch, RootState } from 'store';
 import { loadCategories } from 'store/reducers/categories';
-import { getItems } from 'store/reducers/items';
 
 import Button from 'components/button';
 import Header from 'components/header';
@@ -20,7 +19,6 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(loadCategories());
-    dispatch(getItems());
   }, [dispatch]);
 
   return (

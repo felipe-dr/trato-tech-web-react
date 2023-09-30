@@ -1,6 +1,7 @@
 import { TypedStartListening, configureStore } from '@reduxjs/toolkit';
 
-import { listener } from './middlewares/categories';
+import { categoriesListener } from './middlewares/categories';
+import { itemsListener } from './middlewares/items';
 import cartSlice from './reducers/cart';
 import categoriesSlice from './reducers/categories';
 import itemsSlice from './reducers/items';
@@ -14,7 +15,10 @@ const store = configureStore({
     search: searchSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listener.middleware),
+    getDefaultMiddleware().prepend(
+      categoriesListener.middleware,
+      itemsListener.middleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
