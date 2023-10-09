@@ -1,7 +1,6 @@
 import { TypedStartListening, configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 
-import { categoriesListener } from './middlewares/categories';
 import { itemsListener } from './middlewares/items';
 import cartSlice from './reducers/cart';
 import categoriesSlice from './reducers/categories';
@@ -20,7 +19,7 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(
-      categoriesListener.middleware,
+      // categoriesListener.middleware,
       itemsListener.middleware,
       sagaMiddleware
     ),
