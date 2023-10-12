@@ -2,37 +2,13 @@ import { createListenerMiddleware } from '@reduxjs/toolkit';
 
 import categoriesService from 'services/categories';
 
-import {
-  addAllCategories,
-  addCategory,
-  loadCategories,
-  loadCategory,
-} from 'store/reducers/categories';
+import { addCategory, loadCategory } from 'store/reducers/categories';
 
 import { CategoryModel } from 'interfaces/categories';
 
 import createTask from './utils/create-task';
 
 export const categoriesListener = createListenerMiddleware();
-
-categoriesListener.startListening({
-  actionCreator: loadCategories,
-  effect: async (_action, { fork, dispatch, unsubscribe }) => {
-    const response = await createTask<CategoryModel>({
-      fork,
-      dispatch,
-      get: categoriesService.get,
-      action: addAllCategories,
-      loadingText: 'Carregando categorias',
-      successText: 'Categorias carregadas com sucesso',
-      errorText: 'Erro ao carregar as categorias',
-    });
-
-    if (response.status === 'ok') {
-      unsubscribe();
-    }
-  },
-});
 
 categoriesListener.startListening({
   actionCreator: loadCategory,

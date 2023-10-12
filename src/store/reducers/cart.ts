@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAction, createSlice } from '@reduxjs/toolkit';
 import { UUID } from 'crypto';
 
 interface Cart {
@@ -7,6 +7,8 @@ interface Cart {
 }
 
 const initialState: Cart[] = [];
+
+export const loadPayment = createAction('carrinho/carregarPagamento');
 
 const cartSlice = createSlice({
   name: 'cart',

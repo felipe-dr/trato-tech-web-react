@@ -6,6 +6,7 @@ import Advertise from 'pages/advertise';
 import Cart from 'pages/cart';
 import Category from 'pages/category';
 import Home from 'pages/home';
+import Payment from 'pages/payment';
 
 export default function Router() {
   return (
@@ -17,6 +18,7 @@ export default function Router() {
           <Route path="/carrinho" element={<Cart />} />
           <Route path="/anuncie/:categoryName" element={<Advertise />} />
           <Route path="/anuncie" element={<Advertise />} />
+          <Route path="/pagamento" element={<Payment />} />
         </Route>
       </Routes>
     </BrowserRouter>
