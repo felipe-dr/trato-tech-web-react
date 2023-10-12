@@ -6,7 +6,7 @@ interface Cart {
   quantity: number;
 }
 
-const initialState: Cart[] = [];
+const initialState: { data: Cart[]; total: number } = { data: [], total: 0 };
 
 export const loadPayment = createAction('carrinho/carregarPagamento');
 
@@ -21,23 +21,29 @@ const cartSlice = createSlice({
      * ele não aceita.
      */
     changeCart: (state, action: PayloadAction<UUID>) => {
-      const hasItem = state.some((item) => item.id === action.payload);
+      const hasItem = state.data.some((item) => item.id === action.payload);
 
       if (!hasItem) {
-        return [
-          ...state,
-          {
-            id: action.payload,
-            quantity: 1,
-          },
-        ];
+        return {
+          total: state.total,
+          data: [
+            ...state.data,
+            {
+              id: action.payload,
+              quantity: 1,
+            },
+          ],
+        };
       }
 
-      return state.filter((item) => item.id !== action.payload);
+      return {
+        total: state.total,
+        data: state.data.filter((item) => item.id !== action.payload),
+      };
     },
 
     changeQuantity: (state, action: PayloadAction<Cart>) => {
-      state.map((item) => {
+      state.data.map((item) => {
         const cartItem = item;
 
         if (item.id === action.payload.id) {
@@ -49,8 +55,13 @@ const cartSlice = createSlice({
     },
 
     resetCart: () => initialState,
+    changeTotal: (state, { payload }) => {
+      // eslint-disable-next-line no-param-reassign
+      state.total = payload;
+    },
   },
 });
 
-export const { changeCart, changeQuantity, resetCart } = cartSlice.actions;
+export const { changeCart, changeQuantity, resetCart, changeTotal } =
+  cartSlice.actions;
 export default cartSlice.reducer;

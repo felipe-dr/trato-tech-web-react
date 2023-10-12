@@ -1,9 +1,9 @@
 import instance from 'common/config/api';
 
-import { CategoryModel } from 'interfaces/categories';
+import { CategoryModel } from 'interfaces/category';
 
 const categoriesService = {
-  get: async (): Promise<CategoryModel> => {
+  getCategories: async (): Promise<CategoryModel[]> => {
     const response = await instance.get('/categories');
 
     return response.data;

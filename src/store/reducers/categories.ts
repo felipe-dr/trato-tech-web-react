@@ -8,7 +8,7 @@ import {
 
 import categoriesService from 'services/categories';
 
-import { CategoryModel } from 'interfaces/categories';
+import { CategoryModel } from 'interfaces/category';
 
 import { resetCart } from './cart';
 
@@ -21,7 +21,7 @@ export const loadCategory = createAction<string>('categories/loadCategory');
 
 export const getCategories = createAsyncThunk(
   'categories/get',
-  categoriesService.get
+  categoriesService.getCategories
 );
 
 const categoriesSlice = createSlice({

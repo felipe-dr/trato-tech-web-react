@@ -1,11 +1,11 @@
 import instance from 'common/config/api';
 
-import { FlagsModel } from 'interfaces/flags';
+import { FlagModel } from 'interfaces/flag';
 
 const flagsService = {
-  getById: async (flags: FlagsModel[]) => {
+  getById: async (flags: number[]): Promise<FlagModel[]> => {
     const query = new URLSearchParams();
-    flags.forEach((flag) => query.append('id', flag.id.toString()));
+    flags.forEach((id: number) => query.append('id', id.toString()));
     const response = await instance.get(`/flags?${query.toString()}`);
 
     return response.data;

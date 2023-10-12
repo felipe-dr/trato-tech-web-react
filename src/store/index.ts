@@ -7,6 +7,7 @@ import cartSlice from './reducers/cart';
 import categoriesSlice from './reducers/categories';
 import itemsSlice from './reducers/items';
 import searchSlice from './reducers/search';
+import userSlice from './reducers/user';
 import { cartSaga } from './sagas/cart';
 import { categoriesSaga } from './sagas/categories';
 
@@ -18,6 +19,7 @@ const store = configureStore({
     items: itemsSlice,
     cart: cartSlice,
     search: searchSlice,
+    user: userSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(

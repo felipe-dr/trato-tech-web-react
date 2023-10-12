@@ -4,7 +4,7 @@ import categoriesService from 'services/categories';
 
 import { addCategory, loadCategory } from 'store/reducers/categories';
 
-import { CategoryModel } from 'interfaces/categories';
+import { CategoryModel } from 'interfaces/category';
 
 import createTask from './utils/create-task';
 
