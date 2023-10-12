@@ -5,7 +5,7 @@ import categoriesService from 'services/categories';
 
 import { addAllCategories, loadCategories } from 'store/reducers/categories';
 
-import { CategoryModel } from 'interfaces/categories';
+import { CategoryModel } from 'interfaces/category';
 
 const { toast } = createStandaloneToast();
 
@@ -21,7 +21,7 @@ function* observerCategories(): unknown {
 
   try {
     yield delay(1000);
-    const categories = yield call(categoriesService.get);
+    const categories = yield call(categoriesService.getCategories);
     yield put(addAllCategories(categories));
     toast({
       title: 'Sucesso!',
@@ -44,6 +44,5 @@ function* observerCategories(): unknown {
 // Watcher
 export function* categoriesSaga(): Generator<ForkEffect<CategoryModel>> {
   const task: any = yield takeLatest(loadCategories, observerCategories);
-
   yield takeLatest(addAllCategories, () => task.cancel());
 }

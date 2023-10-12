@@ -50,7 +50,7 @@ function Item(props: ItemProps) {
   const [newTitle, setNewTitle] = useState<string>(title);
   const dispatch = useDispatch<AppDispatch>();
   const hasInCart = useSelector((state: RootState) =>
-    state.cart.some((cartItem) => cartItem.id === id)
+    state.cart.data.some((cartItem) => cartItem.id === id)
   );
 
   function solveFavorite() {

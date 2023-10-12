@@ -26,9 +26,7 @@ export default function Cart() {
   const cart = useSelector((state: RootState) => {
     const typedArray: CartItem[] = [];
     const regexp = new RegExp(state.search, 'i');
-    let total = 0;
-
-    const cartReduce = state.cart.reduce((items, cartItem) => {
+    const cartReduce = state.cart.data.reduce((items, cartItem) => {
       const item = state.items.find(
         (stateItem) => stateItem.id === cartItem.id
       );
@@ -40,8 +38,6 @@ export default function Cart() {
             quantity: cartItem.quantity,
           });
         }
-
-        total += item.price * cartItem.quantity;
       }
 
       return items;
@@ -49,7 +45,7 @@ export default function Cart() {
 
     return {
       cartReduce,
-      total,
+      total: state.cart.total,
     };
   });
 
