@@ -1,8 +1,8 @@
 import { UUID } from 'crypto';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { RootState } from 'store';
-import { resetCart } from 'store/reducers/cart';
 
 import Button from 'components/button';
 import Header from 'components/header';
@@ -22,7 +22,7 @@ interface CartItem {
 }
 
 export default function Cart() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state: RootState) => {
     const typedArray: CartItem[] = [];
     const regexp = new RegExp(state.search, 'i');
@@ -69,7 +69,7 @@ export default function Cart() {
             Subtotal: <strong> R$ {cart.total.toFixed(2)} </strong>
           </span>
         </div>
-        <Button type="submit" onClick={() => dispatch(resetCart())}>
+        <Button type="submit" onClick={() => navigate('/pagamento')}>
           Finalizar compra
         </Button>
       </div>
