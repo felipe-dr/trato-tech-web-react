@@ -1,6 +1,8 @@
 import { PayloadAction, createAction, createSlice } from '@reduxjs/toolkit';
 import { UUID } from 'crypto';
 
+import { FinishCartModel } from 'interfaces/finish-cart';
+
 interface Cart {
   id: UUID;
   quantity: number;
@@ -9,6 +11,9 @@ interface Cart {
 const initialState: { data: Cart[]; total: number } = { data: [], total: 0 };
 
 export const loadPayment = createAction('carrinho/carregarPagamento');
+export const finishPayment = createAction<FinishCartModel>(
+  'carrinho/finalizarPagamento'
+);
 
 const cartSlice = createSlice({
   name: 'cart',
